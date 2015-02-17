@@ -138,6 +138,9 @@ extern zipFile ZEXPORT zipOpen3 OF((const char *pathname, int append, ZPOS64_T d
 extern zipFile ZEXPORT zipOpen3_64 OF((const void *pathname, int append, ZPOS64_T disk_size, 
     zipcharpc* globalcomment, zlib_filefunc64_def* pzlib_filefunc_def));
 
+extern zipFile ZEXPORT zipOpen4(const void *pathname, int append, ZPOS64_T disk_size,
+	zipcharpc* globalcomment, zlib_filefunc64_32_def* pzlib_filefunc64_32_def);
+
 extern int ZEXPORT zipOpenNewFileInZip OF((zipFile file, const char* filename, const zip_fileinfo* zipfi,
     const void* extrafield_local, uInt size_extrafield_local, const void* extrafield_global, 
     uInt size_extrafield_global, const char* comment, int method, int level));
