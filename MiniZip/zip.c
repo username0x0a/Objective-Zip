@@ -471,8 +471,8 @@ local int zipGetDiskSizeAvailable(zipFile file, ZPOS64_T *size_available)
 }
 
 /* Goes to a specific disk number for spanning archives */
-local int zipGoToSpecificDisk OF((zipFile file, int number_disk, int open_existing));
-local int zipGoToSpecificDisk(zipFile file, int number_disk, int open_existing)
+local int zipGoToSpecificDisk OF((zipFile file, uLong number_disk, int open_existing));
+local int zipGoToSpecificDisk(zipFile file, uLong number_disk, int open_existing)
 {
     zip64_internal* zi;
     int err = ZIP_OK;
@@ -500,7 +500,7 @@ local int zipGoToFirstDisk OF((zipFile file));
 local int zipGoToFirstDisk(zipFile file)
 {
     zip64_internal* zi;
-    int number_disk_next;
+    uLong number_disk_next;
     int err = ZIP_OK;
 
 
@@ -527,7 +527,7 @@ local int zipGoToNextDisk(zipFile file)
     zip64_internal* zi;
     ZPOS64_T size_available_in_disk;
     int err = ZIP_OK;
-    int number_disk_next;
+    uLong number_disk_next;
 
 
     zi = (zip64_internal*)file;
@@ -1379,10 +1379,10 @@ local int zip64FlushWriteBuffer OF((zip64_internal* zi));
 local int zip64FlushWriteBuffer(zip64_internal* zi)
 {
     int err = ZIP_OK;
-    uInt written = 0;
-    uInt total_written = 0;
-    uInt write = 0;
-    uInt max_write = 0;
+    uLong written = 0;
+    uLong total_written = 0;
+    uLong write = 0;
+    uLong max_write = 0;
     ZPOS64_T size_available = 0;
 
 
@@ -1425,7 +1425,7 @@ local int zip64FlushWriteBuffer(zip64_internal* zi)
             } 
 
             if (size_available < (ZPOS64_T)max_write)
-                max_write = (uInt)size_available;
+                max_write = (uLong)size_available;
         }
 
         written = ZWRITE64(zi->z_filefunc, zi->filestream, zi->ci.buffered_data + total_written, max_write);
@@ -1843,7 +1843,7 @@ extern int ZEXPORT zipClose(zipFile file, const char* global_comment)
     uInt size_global_comment = 0;
     ZPOS64_T centraldir_pos_inzip;
     ZPOS64_T pos;
-    int write;
+    uLong write;
 
     if (file == NULL)
         return ZIP_PARAMERROR;

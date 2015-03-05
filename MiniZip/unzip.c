@@ -640,7 +640,7 @@ local int unzGoToNextDisk(unzFile file)
 {
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    int number_disk_next;
+    uLong number_disk_next;
 
     s = (unz64_s*)file;
     if (s == NULL)
@@ -1384,10 +1384,10 @@ extern int ZEXPORT unzReadCurrentFile(unzFile file, voidp buf, unsigned len)
     {
         if (pfile_in_zip_read_info->stream.avail_in == 0)
         {
-            uInt bytes_to_read = UNZ_BUFSIZE;
-            uInt bytes_not_read = 0;
-            uInt bytes_read = 0;
-            uInt total_bytes_read = 0;
+            uLong bytes_to_read = UNZ_BUFSIZE;
+            uLong bytes_not_read = 0;
+            uLong bytes_read = 0;
+            uLong total_bytes_read = 0;
 
             if (pfile_in_zip_read_info->stream.next_in != NULL)
                 bytes_not_read = pfile_in_zip_read_info->read_buffer + UNZ_BUFSIZE - 
@@ -1449,7 +1449,7 @@ extern int ZEXPORT unzReadCurrentFile(unzFile file, voidp buf, unsigned len)
 
             pfile_in_zip_read_info->rest_read_compressed -= total_bytes_read;
             pfile_in_zip_read_info->stream.next_in = (Bytef*)pfile_in_zip_read_info->read_buffer;
-            pfile_in_zip_read_info->stream.avail_in = (uInt)bytes_not_read + total_bytes_read;
+            pfile_in_zip_read_info->stream.avail_in = (uInt)bytes_not_read + (uInt)total_bytes_read;
         }
 
         if ((pfile_in_zip_read_info->compression_method == 0) || (pfile_in_zip_read_info->raw))

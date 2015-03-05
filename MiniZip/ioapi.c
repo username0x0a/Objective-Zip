@@ -51,7 +51,7 @@ voidpf call_zopen64 (const zlib_filefunc64_32_def* pfilefunc,const void*filename
     return (*(pfilefunc->zopen32_file))(pfilefunc->zfile_func64.opaque,(const char*)filename,mode);
 }
 
-voidpf call_zopendisk64 OF((const zlib_filefunc64_32_def* pfilefunc, voidpf filestream, int number_disk, int mode))
+voidpf call_zopendisk64 OF((const zlib_filefunc64_32_def* pfilefunc, voidpf filestream, uLong number_disk, int mode))
 {
     if (pfilefunc->zfile_func64.zopendisk64_file != NULL)
         return (*(pfilefunc->zfile_func64.zopendisk64_file)) (pfilefunc->zfile_func64.opaque,filestream,number_disk,mode);
@@ -109,7 +109,7 @@ static int     ZCALLBACK ferror_file_func OF((voidpf opaque, voidpf stream));
 typedef struct 
 {
     FILE *file;
-    int filenameLength;
+    size_t filenameLength;
     void *filename;
 } FILE_IOPOSIX;
 
@@ -169,12 +169,12 @@ static voidpf ZCALLBACK fopen64_file_func (voidpf opaque, const void* filename, 
     return file;
 }
 
-static voidpf ZCALLBACK fopendisk64_file_func (voidpf opaque, voidpf stream, int number_disk, int mode)
+static voidpf ZCALLBACK fopendisk64_file_func (voidpf opaque, voidpf stream, uLong number_disk, int mode)
 {
     FILE_IOPOSIX *ioposix = NULL;
     char *diskFilename = NULL;
     voidpf ret = NULL;
-    int i = 0;
+    long i = 0;
 
     if (stream == NULL)
         return NULL;
@@ -185,7 +185,7 @@ static voidpf ZCALLBACK fopendisk64_file_func (voidpf opaque, voidpf stream, int
     {
         if (diskFilename[i] != '.') 
             continue;
-        snprintf(&diskFilename[i], ioposix->filenameLength - i, ".z%02d", number_disk + 1);
+        snprintf(&diskFilename[i], ioposix->filenameLength - i, ".z%02lu", number_disk + 1);
         break;
     }
     if (i >= 0)
@@ -194,12 +194,12 @@ static voidpf ZCALLBACK fopendisk64_file_func (voidpf opaque, voidpf stream, int
     return ret;
 }
 
-static voidpf ZCALLBACK fopendisk_file_func (voidpf opaque, voidpf stream, int number_disk, int mode)
+static voidpf ZCALLBACK fopendisk_file_func (voidpf opaque, voidpf stream, uLong number_disk, int mode)
 {
     FILE_IOPOSIX *ioposix = NULL;
     char *diskFilename = NULL;
     voidpf ret = NULL;
-    int i = 0;
+    long i = 0;
 
     if (stream == NULL)
         return NULL;
@@ -210,7 +210,7 @@ static voidpf ZCALLBACK fopendisk_file_func (voidpf opaque, voidpf stream, int n
     {
         if (diskFilename[i] != '.') 
             continue;
-        snprintf(&diskFilename[i], ioposix->filenameLength - i, ".z%02d", number_disk + 1);
+        snprintf(&diskFilename[i], ioposix->filenameLength - i, ".z%02lu", number_disk + 1);
         break;
     }
     if (i >= 0)

@@ -181,7 +181,7 @@
 		[self log:@"Test 1: reading from first file's stream..."];
 		
 		NSMutableData *data1= [[[NSMutableData alloc] initWithLength:256] autorelease];
-		int bytesRead1= [read1 readDataWithBuffer:data1];
+		NSUInteger bytesRead1= [read1 readDataWithBuffer:data1];
 		
 		BOOL ok= NO;
 		if (bytesRead1 == 3) {
@@ -207,7 +207,7 @@
 		[self log:@"Test 1: reading from second file's stream..."];
 		
 		NSMutableData *data2= [[[NSMutableData alloc] initWithLength:256] autorelease];
-		int bytesRead2= [read2 readDataWithBuffer:data2];
+		NSUInteger bytesRead2= [read2 readDataWithBuffer:data2];
 		
 		ok= NO;
 		if (bytesRead2 == 3) {
@@ -235,7 +235,7 @@
 	} @catch (ZipException *ze) {
 		[self log:@"Test 1: caught a ZipException (see logs), terminating..."];
 		
-		NSLog(@"Test 1: ZipException caught: %d - %@", ze.error, [ze reason]);
+		NSLog(@"Test 1: ZipException caught: %zd - %@", ze.error, [ze reason]);
 
 	} @catch (id e) {
 		[self log:@"Test 1: caught a generic exception (see logs), terminating..."];
@@ -307,7 +307,7 @@
 		[self log:@"Test 2: reading from file's stream..."];
 		
 		for (int i= 0; i < HUGE_TEST_NUMBER_OF_BLOCKS; i++) {
-			int bytesRead= [read readDataWithBuffer:buffer];
+			NSUInteger bytesRead= [read readDataWithBuffer:buffer];
 			
 			BOOL ok= NO;
 			if (bytesRead == [data length]) {
@@ -340,7 +340,7 @@
 	} @catch (ZipException *ze) {
 		[self log:@"Test 2: caught a ZipException (see logs), terminating..."];
 		
-		NSLog(@"Test 2: ZipException caught: %d - %@", ze.error, [ze reason]);
+		NSLog(@"Test 2: ZipException caught: %zd - %@", ze.error, [ze reason]);
 		
 	} @catch (id e) {
 		[self log:@"Test 2: caught a generic exception (see logs), terminating..."];
@@ -377,7 +377,7 @@
 		
 		NSMutableData *buffer= [[NSMutableData alloc] initWithLength:1024];
 
-		int bytesRead= [read readDataWithBuffer:buffer];
+		NSUInteger bytesRead= [read readDataWithBuffer:buffer];
 		
 		NSString *fileText= [[[NSString alloc] initWithBytes:[buffer bytes] length:bytesRead encoding:NSUTF8StringEncoding] autorelease];
 		if ([fileText isEqualToString:@"Objective-Zip Mac test file\n"])
@@ -401,7 +401,7 @@
 	} @catch (ZipException *ze) {
 		[self log:@"Test 3: caught a ZipException (see logs), terminating..."];
 		
-		NSLog(@"Test 3: ZipException caught: %d - %@", ze.error, [ze reason]);
+		NSLog(@"Test 3: ZipException caught: %zd - %@", ze.error, [ze reason]);
 		
 	} @catch (id e) {
 		[self log:@"Test 3: caught a generic exception (see logs), terminating..."];
@@ -436,7 +436,7 @@
 		
 		NSMutableData *buffer= [[NSMutableData alloc] initWithLength:1024];
 		
-		int bytesRead= [read readDataWithBuffer:buffer];
+		NSUInteger bytesRead= [read readDataWithBuffer:buffer];
 		
 		NSString *fileText= [[[NSString alloc] initWithBytes:[buffer bytes] length:bytesRead encoding:NSUTF8StringEncoding] autorelease];
 		if ([fileText isEqualToString:@"Objective-Zip Windows test file\r\n"])
@@ -460,7 +460,7 @@
 	} @catch (ZipException *ze) {
 		[self log:@"Test 4: caught a ZipException (see logs), terminating..."];
 		
-		NSLog(@"Test 4: ZipException caught: %d - %@", ze.error, [ze reason]);
+		NSLog(@"Test 4: ZipException caught: %zd - %@", ze.error, [ze reason]);
 		
 	} @catch (id e) {
 		[self log:@"Test 4: caught a generic exception (see logs), terminating..."];
