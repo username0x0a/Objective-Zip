@@ -36,7 +36,7 @@
 
 @implementation FileInZipInfo
 
-- (id) initWithName:(NSString *)name length:(NSUInteger)length level:(ZipCompressionLevel)level crypted:(BOOL)crypted size:(NSUInteger)size date:(NSDate *)date crc32:(NSUInteger)crc32 {
+- (id) initWithName:(NSString *)name length:(uint64_t)length level:(ZipCompressionLevel)level crypted:(BOOL)crypted size:(uint64_t)size date:(NSDate *)date crc32:(NSUInteger)crc32 {
 	if (self= [super init]) {
 		_name= [name ah_retain];
 		_length= length;
