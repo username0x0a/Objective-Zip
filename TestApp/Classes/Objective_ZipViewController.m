@@ -273,8 +273,10 @@
 		[self log:@"Test 2: writing to file's stream..."];
 		
 		NSMutableData *data= [[NSMutableData alloc] initWithLength:HUGE_TEST_BLOCK_LENGTH];
-		SecRandomCopyBytes(kSecRandomDefault, [data length], [data mutableBytes]);
-		
+		int err= SecRandomCopyBytes(kSecRandomDefault, [data length], [data mutableBytes]);
+
+		if (err) @throw @"SecRandomCopyBytes";
+
 		NSData *checkData= [data subdataWithRange:NSMakeRange(0, 100)];
 
 		NSMutableData *buffer= [[NSMutableData alloc] initWithLength:HUGE_TEST_BLOCK_LENGTH]; // For use later

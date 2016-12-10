@@ -6,3 +6,4 @@ build
 *.swp
 **/**/xcuserdata
 **/**/project.xcworkspace
+DerivedData/
