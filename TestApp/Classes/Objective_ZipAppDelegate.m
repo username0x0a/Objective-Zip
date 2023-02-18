@@ -40,7 +40,7 @@
 @synthesize viewController;
 
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {    
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
     [window setRootViewController:viewController];
     [window makeKeyAndVisible];
 }
